@@ -1,22 +1,15 @@
 version: '3'
 
 services : 
-  ihm :
-    container_name: ESGI_IHM
-    build: docker/ihm
-    ports : 
-     - "80:80"
-    volumes : 
-     - ./ihm:/var/www/html/
   mongodb :
-    container_name: ESGI_MONGO
+    container_name: riot_MONGO
     image : mongo:latest
     volumes:
         - ./data:/data/import
     ports :
        - "27017:27017"
   neo4j:
-    container_name: ESGI_NEO4J
+    container_name: riot_NEO4J
     image: neo4j:latest
     environment:
        - "NEO4J_AUTH:neo4j/esgi_password"
@@ -26,7 +19,7 @@ services :
        - "7474:7474"
        - "7687:7687"
   python:
-    container_name: ESGI_PYTHON
+    container_name: riot_PYTHON
     build: docker/python
     volumes: 
       - ./python:/home/jovyan/work/python
