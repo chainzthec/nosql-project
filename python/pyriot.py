@@ -281,3 +281,14 @@ def graph_spent_gold(key, matches):
             if l[x]['participants'][y]['teamId'] == key:
                 graph_gold.append(l[x]['participants'][y]['stats']['goldSpent']) 
     return graph_gold
+
+def graph_living_time(matches):
+    list_live = []
+    avg_time_living = matches.find({},{"participants.stats.longestTimeSpentLiving":1,  "_id":0})
+    count_matches = matches.count_documents({})
+    res_sum = 0
+    for r in range(count_matches) :
+        for i in range(10):
+            list_live.append(avg_time_living[r]['participants'][i]['stats']['longestTimeSpentLiving'])
+
+    return list_live
