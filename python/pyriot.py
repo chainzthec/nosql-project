@@ -249,3 +249,35 @@ def avg_living_time(matches):
             res_sum = res_sum + (avg_time_living[r]['participants'][i]['stats']['longestTimeSpentLiving'])
 
     return ((res_sum/(count_matches * 10))/60)
+
+def graph_barons_kills(matches):
+    list_barron = []
+    baron_kills = matches.find({},{"teams.baronKills":1, "_id":0})
+    count_matches = matches.count_documents({})
+    res_sum = 0
+    for r in range(count_matches) :
+        for i in range(1):
+            list_barron.append(baron_kills[r]['teams'][i]['baronKills'])
+    return list_barron 
+
+def graph_minions_killed(matches):
+    list_minions = []
+    sum_killed_minions = matches.find({},{"participants.stats.totalMinionsKilled":1,  "_id":0})
+    count_matches = matches.count_documents({})
+    res_sum = 0
+    for r in range(count_matches) :
+        for i in range(10):
+            list_minions.append(sum_killed_minions[r]['participants'][i]['stats']['totalMinionsKilled'])
+    return list_minions
+
+def graph_spent_gold(key, matches):  
+    graph_gold = []
+    t=[]
+    sum = 0
+    cursor = matches.find({},{"participants.teamId":1,"participants.stats.goldSpent":1, "_id":0})
+    l = [r for r in cursor]
+    for x in range(len(l)) :
+        for y in range(10):
+            if l[x]['participants'][y]['teamId'] == key:
+                graph_gold.append(l[x]['participants'][y]['stats']['goldSpent']) 
+    return graph_gold
